@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Success</title>
+          <link rel="icon" type="image/x-icon" href="/static/logo.png">
+
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a1a1a; color: white; text-align: center; padding: 100px; }
+        .success-card { background: #2c2c2c; padding: 50px; border-radius: 15px; display: inline-block; }
+        h1 { color: #2e7d32; }
+        .back-home { color: #d46a3a; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="success-card">
+        <h1>✔ Order Placed Successfully!</h1>
+        <p>Thank you, <b>{{ order.name }}</b>. Your items will be shipped to:</p>
+        <p style="color: #bbb;">{{ order.address }}</p>
+        <p>Confirmation sent to: <i>{{ order.email }}</i></p>
+        <br>
+        <a href="/" class="back-home">Continue Shopping</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>RW-MART AI</title>
+      <link rel="icon" type="image/x-icon" href="/static/logo.png">
+
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: rgba(16, 207, 207, 0.701);
+            color: white;
+            text-align: center;
+        }
+
+        /* 🌈 Animated Border */
+        .header-box {
+            position: relative;
+            padding: 15px 40px;
+            border-radius: 15px;
+            background: #1e1e1e;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Moving Gradient Border Layer */
+        .header-box::before {
+            content: "";
+            position: absolute;
+            inset: -3px;
+            border-radius: 18px;
+            background: linear-gradient(270deg, #ff7e5f, #feb47b, #6a11cb, #2575fc, #ff7e5f);
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: borderMove 2s linear infinite;
+        }
+
+        /* Inner Content Layer */
+        .header-box::after {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            background: #c5b9ec;
+            border-radius: 12px;
+            z-index: -1;
+        }
+
+        /* Animation */
+        @keyframes borderMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 400% 50%;
+            }
+        }
+
+        /* Floating Cart */
+        .cart-wrapper {
+            position: relative;
+            text-decoration: none;
+        }
+
+        .cart-button {
+            background: #d46a3a;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Dropdown */
+        .cart-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 45px;
+            background: white;
+            color: black;
+            padding: 10px;
+            border-radius: 10px;
+            width: 200px;
+        }
+
+        .cart-wrapper:hover .cart-dropdown {
+            display: block;
+        }
+
+        .mini-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        .view-more {
+            font-size: 10px;
+            color: #d46a3a;
+        }
+
+        .empty {
+            color: #999;
+            font-size: 13px;
+        }
+
+        h2 {
+            color: white;
+        }
+
+        /* Search */
+        .search-box {
+            margin: 40px auto;
+            width: 60%;
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .search-box button {
+            background: #d46a3a;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Category pills */
+        .categories {
+            margin: 20px auto;
+            width: 90%;
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 0;
+            gap: 10px;
+            scrollbar-width: thin;
+        }
+
+        .categories::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .categories::-webkit-scrollbar-thumb {
+            background: #d46a3a;
+            border-radius: 10px;
+        }
+
+        .category-btn {
+            display: inline-block;
+            flex: 0 0 auto;
+        }
+
+        .category-btn button {
+            background: #333;
+            border: 1px solid #555;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: capitalize;
+        }
+
+        .category-btn button:hover,
+        .category-btn button.active {
+            background: #d46a3a;
+            border-color: #d46a3a;
+        }
+
+        /* Detail panel */
+        .detail-container {
+            background: white;
+            color: #222;
+            padding: 40px;
+            display: flex;
+            border-radius: 15px;
+            margin: 20px auto;
+            width: 90%;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Cards */
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            color: black;
+            margin: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            width: 220px;
+            transition: transform 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .price {
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        /* Browse toolbar */
+        .browse-section {
+            width: 85%;
+            margin: 40px auto 20px auto;
+            text-align: left;
+        }
+
+        .browse-heading {
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #b0b0b0;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .styled-select {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #555;
+            background: #333;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .product-count {
+            color: #b0b0b0;
+            font-size: 14px;
+        }
+
+        /* In-cart badge */
+        .in-cart-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #2e7d32;
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        /* ── Pagination ── */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin: 40px auto 20px;
+            flex-wrap: wrap;
+        }
+
+        .pagination a,
+        .pagination span {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .pagination a {
+            background: #333;
+            border: 1px solid #555;
+            color: white;
+        }
+
+        .pagination a:hover {
+            background: #d46a3a;
+            border-color: #d46a3a;
+        }
+
+        .pagination span.current {
+            background: #d46a3a;
+            color: white;
+            border: 1px solid #d46a3a;
+        }
+
+        .pagination span.dots {
+            color: #888;
+            border: none;
+            background: none;
+        }
+
+        .page-info {
+            color: #b0b0b0;
+            font-size: 13px;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 50px;
+            background: #111;
+            padding: 30px 20px;
+            color: #ccc;
+            text-align: center;
+            border-top: 2px solid #444;
+        }
+
+        .footer h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            margin: 15px 0;
+        }
+
+        .footer-links a {
+            color: #d46a3a;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 🌈 Animated Border Wrapper -->
+    <div class="header-box">
+
+        <!-- Header Content -->
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+
+            <!-- LEFT: Logo + Title -->
+            <div style="display:flex; align-items:center;">
+                <img src="{{ url_for('static', filename='logo.png') }}" width="50"
+                    style="border-radius:10px; margin-right:10px;">
+                <h2 style="margin:0;">RW-MART AI</h2>
+            </div>
+
+            <!-- CENTER: Main Title -->
+            <h2 style="margin:0;">AI Product Recommendation</h2>
+
+            <!-- RIGHT: Floating Cart -->
+            <a href="/cart" class="cart-wrapper">
+                <div class="cart-button">
+                    🛒 Cart ({{ session['cart']|length if session.get('cart') else 0 }})
+                </div>
+
+                <div class="cart-dropdown">
+                    <h4>Recent Items</h4>
+                    {% if session.get('cart') %}
+                    {% for item in session['cart'][:3] %}
+                    <div class="mini-item">{{ item }}</div>
+                    {% endfor %}
+                    <p class="view-more">Click to see all...</p>
+                    {% else %}
+                    <p class="empty">Cart is empty</p>
+                    {% endif %}
+                </div>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ── Search ───────────────────────────────────────────────── -->
+    <form method="GET" action="/">
+        <div class="search-box">
+            <input type="text" name="search" placeholder="Search products, brands, categories..."
+                value="{{ search_query }}">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+
+    <!-- ── Category Pills ───────────────────────────────────────── -->
+    <div class="categories">
+        <div class="category-btn">
+            <a href="/?category=all&sort={{ sort_option }}&search={{ search_query }}" style="text-decoration:none;">
+                <button type="button" {% if category_query=='all' %}class="active" {% endif %}>All Products</button>
+            </a>
+        </div>
+        {% for cat in categories %}
+        <div class="category-btn">
+            <a href="/?category={{ cat }}&sort={{ sort_option }}&search={{ search_query }}"
+                style="text-decoration:none;">
+                <button type="button" {% if category_query==cat %}class="active" {% endif %}>
+                    {{ cat.replace('-',' ') }}
+                </button>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ── Selected Product Detail ──────────────────────────────── -->
+    {% if selected_product %}
+    <div class="detail-container">
+        <img src="{{ selected_product.image }}" onerror="this.src='https://via.placeholder.com/350x450?text=No+Image'"
+            style="width: 350px;;height:450px;object-fit:contain;border-radius:10px;flex-shrink:0;">
+
+        <div style="margin-left:40px;flex:1;">
+            <p style="color:#d46a3a;font-weight:bold;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">
+                {{ selected_product.category.replace('-',' ') }}
+            </p>
+            <h1 style="font-size:30px;margin:0 0 10px;color:#1a1a1a;line-height:1.2;">
+                {{ selected_product.name }}
+            </h1>
+            <div style="color:#f39c12;font-size:20px;margin-bottom:15px;">
+                ★ {{ selected_product.rating }} / 5.0
+            </div>
+            <p style="color:#444;line-height:1.8;font-size:15px;margin-bottom:25px;">
+                {{ selected_product.description[:300] }}{% if selected_product.description|length > 300 %}...{% endif %}
+            </p>
+            <div style="background:#e8f5e9;color:#2e7d32;padding:10px 25px;border-radius:8px;
+                    display:inline-block;font-weight:bold;font-size:24px;margin-bottom:30px;">
+                ₹{{ "{:,}".format(selected_product.price) }}
+            </div>
+
+            <div style="display:flex;gap:15px;">
+                <form method="POST">
+                    <input type="hidden" name="cart_item" value="{{ selected_product.name }}">
+                    <input type="hidden" name="view_product" value="{{ selected_product.name }}">
+                    <input type="hidden" name="page" value="{{ page }}">
+                    <input type="hidden" name="sort" value="{{ sort_option }}">
+                    <input type="hidden" name="category" value="{{ category_query }}">
+                    <input type="hidden" name="search" value="{{ search_query }}">
+                    {% if session['cart'] and selected_product.name in session['cart'] %}
+                    <button type="button" style="background:#2e7d32;color:white;border:none;padding:15px 35px;
+                           border-radius:5px;font-weight:bold;cursor:default;">
+                        ✓ Added to Cart
+                    </button>
+                    {% else %}
+                    <button type="submit" style="background:#d46a3a;color:white;border:none;padding:15px 35px;
+                           border-radius:5px;font-weight:bold;cursor:pointer;">
+                        Add to Cart
+                    </button>
+                    {% endif %}
+                </form>
+
+                <form method="POST" action="/buy_now_direct">
+                    <input type="hidden" name="buy_now_item" value="{{ selected_product.name }}">
+                    <button type="submit" style="background:#1a1a1a;color:white;border:none;padding:15px 35px;
+                           border-radius:5px;font-weight:bold;cursor:pointer;">
+                        Buy Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommendations -->
+    <h3 style="text-align:left;width:90%;margin:40px auto 10px;color:#d46a3a;">
+        Recommended for You
+    </h3>
+    <div class="products">
+        {% for item in recommendations %}
+        <form method="POST" style="display:inline;">
+            <input type="hidden" name="view_product" value="{{ item.name }}">
+            <input type="hidden" name="page" value="{{ page }}">
+            <input type="hidden" name="sort" value="{{ sort_option }}">
+            <input type="hidden" name="category" value="{{ category_query }}">
+            <input type="hidden" name="search" value="{{ search_query }}">
+            <div class="card" onclick="this.parentNode.submit();">
+                <img src="{{ item.image }}" onerror="this.src='https://via.placeholder.com/180?text=No+Image'">
+                <p style="margin:10px 0 5px;height:40px;overflow:hidden;"><b>{{ item.name }}</b></p>
+                <p class="price">₹{{ "{:,}".format(item.price) }}</p>
+                <p style="font-size:12px;color:#888;">★ {{ item.rating }}</p>
+            </div>
+        </form>
+        {% endfor %}
+    </div>
+    <hr style="border:0;border-top:1px solid #444;margin:50px 0;">
+    {% endif %}
+
+    <!-- ── Browse Toolbar ────────────────────────────────────────── -->
+    <div class="browse-section">
+        <div class="browse-heading">Browse All Products</div>
+        <div class="toolbar">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <select class="styled-select" onchange="applyFilter()" id="sortSelect">
+                    <option value="default" {% if sort_option=='default' %}selected{% endif %}>Sort: Default</option>
+                    <option value="rating" {% if sort_option=='rating' %}selected{% endif %}>Highest Rated</option>
+                    <option value="price_asc" {% if sort_option=='price_asc' %}selected{% endif %}>Price: Low → High
+                    </option>
+                    <option value="price_desc" {% if sort_option=='price_desc' %}selected{% endif %}>Price: High → Low
+                    </option>
+                </select>
+
+                <select class="styled-select" onchange="applyFilter()" id="catSelect">
+                    <option value="all">All Categories</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat }}" {% if category_query==cat %}selected{% endif %}>
+                        {{ cat.replace('-',' ') }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="product-count">
+                Showing {{ (page-1)*24 + 1 }}–{{ [(page)*24, total_products]|min }} of {{ total_products }} products
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Product Grid ──────────────────────────────────────────── -->
+    <div class="products">
+        {% if products %}
+        {% for item in products %}
+        <form method="POST" style="display:inline;">
+            <input type="hidden" name="view_product" value="{{ item.name }}">
+            <input type="hidden" name="page" value="{{ page }}">
+            <input type="hidden" name="sort" value="{{ sort_option }}">
+            <input type="hidden" name="category" value="{{ category_query }}">
+            <input type="hidden" name="search" value="{{ search_query }}">
+            <div class="card" onclick="this.parentNode.submit();">
+                {% if session['cart'] and item.name in session['cart'] %}
+                <div class="in-cart-badge">✓ IN CART</div>
+                {% endif %}
+                <img src="{{ item.image }}" loading="lazy"
+                    onerror="this.src='https://via.placeholder.com/180?text=No+Image'">
+                <p style="height:40px;overflow:hidden;margin:10px 0 5px;"><b>{{ item.name }}</b></p>
+                <p class="price">₹{{ "{:,}".format(item.price) }}</p>
+                <p style="font-size:12px;color:#888;margin:0;">★ {{ item.rating }}</p>
+            </div>
+        </form>
+        {% endfor %}
+        {% else %}
+        <div style="padding:50px;">
+            <p>No products found matching your search.</p>
+            <a href="/" style="color:#d46a3a;text-decoration:none;">← View All Products</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- ── Pagination ────────────────────────────────────────────── -->
+    {% if total_pages > 1 %}
+    <div class="pagination">
+
+        {% if page > 1 %}
+        <a href="/?page={{ page-1 }}&sort={{ sort_option }}&category={{ category_query }}&search={{ search_query }}">←
+            Prev</a>
+        {% endif %}
+
+        {% for p in range(1, total_pages+1) %}
+        {% if p == 1 or p == total_pages or (p >= page-2 and p <= page+2) %} {% if p==page %} <span class="current">{{ p
+            }}</span>
+            {% else %}
+            <a href="/?page={{ p }}&sort={{ sort_option }}&category={{ category_query }}&search={{ search_query }}">{{ p
+                }}</a>
+            {% endif %}
+            {% elif p == page-3 or p == page+3 %}
+            <span class="dots">…</span>
+            {% endif %}
+            {% endfor %}
+
+            {% if page < total_pages %} <a
+                href="/?page={{ page+1 }}&sort={{ sort_option }}&category={{ category_query }}&search={{ search_query }}">
+                Next →</a>
+                {% endif %}
+
+    </div>
+    <div class="page-info">Page {{ page }} of {{ total_pages }}</div>
+    {% endif %}
+
+    <div style="margin-bottom:100px;"></div>
+
+    <script>
+        function applyFilter() {
+            const sort = document.getElementById('sortSelect').value;
+            const cat = document.getElementById('catSelect').value;
+            const search = '{{ search_query }}';
+            window.location.href = `/?sort=${sort}&category=${cat}&search=${search}&page=1`;
+        }
+    </script>
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>RW-MART AI</h3>
+            <p>Smart Shopping Powered by AI</p>
+
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="https://www.linkedin.com/in/rohanwayal/">Contact</a>
+            </div>
+
+            <p class="copyright">
+                © 2026 RW-MART AI | Built with using Flask | Rohan Wayal
+            </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

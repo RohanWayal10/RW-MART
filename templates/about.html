@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AI Smart Store</title>
+          <link rel="icon" type="image/x-icon" href="/static/logo.png">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: white;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header-section h1 {
+            font-size: 48px;
+            color: #d46a3a;
+            margin-bottom: 10px;
+        }
+
+        .header-section p {
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .content-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .content-text h2 {
+            font-size: 32px;
+            color: #fff;
+            border-left: 4px solid #d46a3a;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: #2c2c2c;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: #333;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            color: #d46a3a;
+            margin-bottom: 10px;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 80px;
+            padding: 40px;
+            background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+            border-radius: 20px;
+        }
+
+        .shop-btn {
+            background: #d46a3a;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .shop-btn:hover {
+            background: #b3552d;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-section h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <a href="/" style="color: #d46a3a; text-decoration: none; font-weight: bold;">← Back to Home</a>
+
+        <div class="header-section">
+            <h1>Our Story</h1>
+            <p>Bringing the future of shopping to your doorstep with AI intelligence.</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>The AI Store Mission</h2>
+                <p>Founded in 2024, our store was built on a simple idea: <strong>Shopping should be smart, fast, and
+                        personalized.</strong></p>
+                <p>We use advanced recommendation algorithms to help you discover products you'll actually love. By
+                    analyzing trends and customer preferences, we curate a selection of the highest-rated electronics
+                    and lifestyle goods available.</p>
+            </div>
+            <div class="content-image">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80"
+                    alt="Tech Background">
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin-bottom: 40px;">Why Shop With Us?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🤖</span>
+                <h3>AI Recommendations</h3>
+                <p>Get personalized product suggestions based on your unique interests.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🚀</span>
+                <h3>Fast Delivery</h3>
+                <p>We partner with top logistics to ensure your order arrives in record time.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🛡️</span>
+                <h3>Secure Payment</h3>
+                <p>Multiple payment options including UPI and Card with encrypted processing.</p>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to find your next favorite item?</h2>
+            <p style="color: #aaa; margin-bottom: 30px;">Join thousands of happy customers shopping with AI intelligence
+                today.</p>
+            <a href="/" class="shop-btn">Start Shopping Now</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

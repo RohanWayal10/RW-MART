@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout - AI Store</title>
+          <link rel="icon" type="image/x-icon" href="/static/logo.png">
+
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a1a1a; color: white; padding: 40px; }
+        .checkout-box { max-width: 600px; margin: auto; background: #2c2c2c; padding: 30px; border-radius: 15px; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 8px; color: #aaa; font-size: 14px; }
+        input, textarea, select { 
+            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #444; 
+            background: #333; color: white; box-sizing: border-box; 
+        }
+        .pay-btn { 
+            background: #d46a3a; color: white; border: none; width: 100%; 
+            padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; 
+        }
+        .payment-options { display: flex; gap: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="checkout-box">
+        <h2>Shipping & Payment</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="name" required placeholder="John Doe">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" required placeholder="john@example.com">
+            </div>
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input type="tel" name="phone" required placeholder="+91 9876543210">
+            </div>
+            <div class="form-group">
+                <label>Full Delivery Address</label>
+                <textarea name="address" rows="3" required></textarea>
+            </div>
+            
+           <div class="form-group" required>
+    <label>Payment Method</label required>
+    <select name="payment_method" id="payMethod" onchange="togglePayment()">
+        <option value="COD">Cash on Delivery</option>
+        <option value="UPI">UPI (Google Pay / PhonePe)</option>
+        <option value="Card">Credit / Debit Card</option>
+    </select>
+</div>
+
+<div id="upi_details" style="display:none; text-align: center; background: #fff; padding: 20px; border-radius: 10px; margin-top: 10px;">
+    <p style="color: #333; font-weight: bold; margin-bottom: 10px;">Scan to Pay</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=aistore@upi&pn=AI%20Store&am=0" alt="Fake QR Code">
+    <p style="color: #666; font-size: 12px; margin-top: 5px;">UPI ID: aistore@upi</p>
+</div>
+
+<div id="card_details" style="display:none; margin-top: 10px; background: #333; padding: 15px; border-radius: 10px;">
+    <div class="form-group">
+        <label>Card Number</label>
+        <input type="text" placeholder="1234 5678 9101 1121" maxlength="19">
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <div style="flex: 1;">
+            <label>Expiry</label>
+            <input type="text" placeholder="MM/YY" maxlength="5">
+        </div>
+        <div style="flex: 1;">
+            <label>CVV</label>
+            <input type="password" placeholder="****" maxlength="4">
+        </div>
+    </div>
+</div>
+
+            <button type="submit" class="pay-btn">Complete Purchase</button>
+        </form>
+    </div>
+<script>
+function togglePayment() {
+    const method = document.getElementById('payMethod').value;
+    const upiDiv = document.getElementById('upi_details');
+    const cardDiv = document.getElementById('card_details');
+
+    // Reset visibility
+    upiDiv.style.display = 'none';
+    cardDiv.style.display = 'none';
+
+    if (method === 'UPI') {
+        upiDiv.style.display = 'block';
+    } else if (method === 'Card') {
+        cardDiv.style.display = 'block';
+    }
+}
+</script>
+</body>
+</html>

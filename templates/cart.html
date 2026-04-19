@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Your Shopping Cart</title>
+    <link rel="icon" type="image/x-icon" href="/static/logo.png">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: white;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .cart-container {
+            max-width: 800px;
+            margin: auto;
+            background: #2c2c2c;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #444;
+            padding: 15px 0;
+            justify-content: space-between;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .item-info {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .remove-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .remove-btn:hover {
+            background: #cc0000;
+        }
+
+        .summary {
+            margin-top: 30px;
+            text-align: right;
+            border-top: 2px solid #d46a3a;
+            padding-top: 20px;
+        }
+
+        .checkout-btn {
+            background: #d46a3a;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #b3552d;
+        }
+
+        .back-link {
+            color: #aaa;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            color: #d46a3a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cart-container">
+        <a href="/" class="back-link">← Continue Shopping</a>
+        <h1>Your Shopping Cart</h1>
+
+        {% if items %}
+        {% for item in items %}
+        <div class="cart-item">
+            <img src="{{ item.image }}">
+            <div class="item-info">
+                <div style="font-weight: bold; font-size: 18px;">{{ item.name }}</div>
+                <div style="color: #2e7d32; margin-top: 5px; font-weight: bold;">{{ item.price }}</div>
+            </div>
+
+            <form method="POST" style="margin: 0;">
+                <input type="hidden" name="remove_item" value="{{ item.name }}">
+                <button type="submit" class="remove-btn">Remove</button>
+            </form>
+        </div>
+        {% endfor %}
+
+        <div class="summary">
+            <div style="font-size: 20px; color: #bbb;">Order Total:</div>
+            <div style="font-size: 32px; font-weight: bold; color: white;">₹{{ "{:,.2f}".format(total) }}</div>
+
+            <a href="/checkout" class="checkout-btn">Proceed to Checkout</a>
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 50px;">
+            <p style="color: #888; font-size: 18px;">Your cart is empty.</p>
+            <a href="/" class="checkout-btn">Browse Products</a>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>
